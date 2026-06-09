@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Digital Parenting Score Calculator - Check Your Child's Screen Time Health</title>
+    <meta name="description" content="Free online calculator to check your child's digital wellness and screen-time habits. Get personalized recommendations in under 60 seconds. No registration required.">
+    <meta name="keywords" content="digital parenting, screen time calculator, child digital wellness, parenting score, screen time health">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Digital Parenting Score Calculator">
+    <meta property="og:description" content="Free online calculator to check your child's digital wellness and screen-time habits.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_IN">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- FAQ Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Digital Parenting Score Calculator",
+        "description": "Free online calculator to check your child's digital wellness and screen-time habits.",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "INR"
+        }
+    }
+    </script>
+
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563EB;
+            --primary-dark: #1D4ED8;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+            padding: 0.875rem 2rem;
+            border-radius: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1.125rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--gray-800);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #EFF6FF 0%, var(--white) 100%);
+            padding: 4rem 0;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #DBEAFE;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .form-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .slider {
+            width: 100%;
+            height: 0.5rem;
+            background: var(--gray-200);
+            border-radius: 0.5rem;
+            appearance: none;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-range {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            margin-top: 0.25rem;
+        }
+
+        .select-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            background: var(--white);
+            transition: border-color 0.2s;
+        }
+
+        .select-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Score Display */
+        .score-circle {
+            width: 12rem;
+            height: 12rem;
+            border-radius: 50%;
+            border: 8px solid var(--gray-100);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .score-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .score-total {
+            font-size: 1.25rem;
+            color: var(--gray-400);
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-top: 1rem;
+        }
+
+        .category-excellent {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .category-good {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .category-needs-improvement {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .category-high-risk {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        /* Mini Cards Grid */
+        .mini-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .mini-card {
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            background: var(--gray-50);
+        }
+
+        .mini-card-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .mini-card-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+
+        /* Recommendations */
+        .recommendation-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #EFF6FF;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .recommendation-icon {
+            font-size: 1.25rem;
+            margin-top: 0.125rem;
+        }
+
+        /* Privacy Notice */
+        .privacy-notice {
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1rem 0;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: var(--gray-800);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: var(--gray-50);
+        }
+
+        .faq-answer {
+            color: var(--gray-600);
+            padding: 0.5rem;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-question {
+            background: #EFF6FF;
+        }
+
+        .faq-arrow {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: var(--gray-300);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer h3 {
+            color: var(--white);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-800);
+            padding-top: 1.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        /* Privacy Promise Section */
+        .privacy-promise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .privacy-promise-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .privacy-promise-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .trust-badges {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .mini-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            
+            .trust-badges {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            .score-circle {
+                width: 10rem;
+                height: 10rem;
+            }
+            
+            .score-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header, .footer, .btn-primary, #calculator-form {
+                display: none;
+            }
+            
+            body {
+                background: white;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 50;
+            transition: all 0.2s;
+        }
+
+        .scroll-top:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .scroll-top.visible {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <span>👨‍👩‍👧‍👦</span>
+                <span>Digital Parenting Score</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#calculator">Calculator</a>
+                <a href="#faq">FAQ</a>
+                <a href="#privacy">Privacy</a>
+                <a href="#about">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container text-center">
+            <h1 class="hero-title">Is Your Child's Screen Time Healthy?</h1>
+            <p class="hero-subtitle">Answer a few questions and get a free Digital Parenting Score in less than one minute.</p>
+            <a href="#calculator" class="btn-primary">Calculate Free Score</a>
+            
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <span>🔒</span>
+                    <span>No Login Required</span>
+                </div>
+                <div class="trust-badge">
+                    <span>🛡️</span>
+                    <span>No Data Stored</span>
+                </div>
+                <div class="trust-badge">
+                    <span>💝</span>
+                    <span>Free to Use</span>
+                </div>
+                <div class="trust-badge">
+                    <span>🔐</span>
+                    <span>Privacy First</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="container" style="padding: 4rem 0;">
+        <div class="card" id="calculator-form">
+            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Tell us about your child</h2>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Child's Age (years)</label>
+                    <select id="childAge" class="select-input">
+                        <option value="3">3 years</option>
+                        <option value="4">4 years</option>
+                        <option value="5">5 years</option>
+                        <option value="6">6 years</option>
+                        <option value="7">7 years</option>
+                        <option value="8">8 years</option>
+                        <option value="9">9 years</option>
+                        <option value="10" selected>10 years</option>
+                        <option value="11">11 years</option>
+                        <option value="12">12 years</option>
+                        <option value="13">13 years</option>
+                        <option value="14">14 years</option>
+                        <option value="15">15 years</option>
+                        <option value="16">16 years</option>
+                        <option value="17">17 years</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">School Grade</label>
+                    <select id="schoolGrade" class="select-input">
+                        <option value="1st">1st Grade</option>
+                        <option value="2nd">2nd Grade</option>
+                        <option value="3rd">3rd Grade</option>
+                        <option value="4th">4th Grade</option>
+                        <option value="5th" selected>5th Grade</option>
+                        <option value="6th">6th Grade</option>
+                        <option value="7th">7th Grade</option>
+                        <option value="8th">8th Grade</option>
+                        <option value="9th">9th Grade</option>
+                        <option value="10th">10th Grade</option>
+                        <option value="11th">11th Grade</option>
+                        <option value="12th">12th Grade</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Daily Screen Time</span>
+                    <span class="form-value" id="screenTimeValue">3 hours</span>
+                </label>
+                <input type="range" id="screenTime" class="slider" min="0" max="12" step="0.5" value="3">
+                <div class="slider-range">
+                    <span>0 hours</span>
+                    <span>12 hours</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Gaming</span>
+                    <span class="form-value" id="gamingHoursValue">1 hour</span>
+                </label>
+                <input type="range" id="gamingHours" class="slider" min="0" max="8" step="0.5" value="1">
+                <div class="slider-range">
+                    <span>0 hours</span>
+                    <span>8 hours</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>YouTube/Video</span>
+                    <span class="form-value" id="youtubeHoursValue">1 hour</span>
+                </label>
+                <input type="range" id="youtubeHours" class="slider" min="0" max="8" step="0.5" value="1">
+                <div class="slider-range">
+                    <span>0 hours</span>
+                    <span>8 hours</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Social Media</span>
+                    <span class="form-value" id="socialMediaHoursValue">0.5 hours</span>
+                </label>
+                <input type="range" id="socialMediaHours" class="slider" min="0" max="6" step="0.5" value="0.5">
+                <div class="slider-range">
+                    <span>0 hours</span>
+                    <span>6 hours</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Study Time</span>
+                    <span class="form-value" id="studyHoursValue">2 hours</span>
+                </label>
+                <input type="range" id="studyHours" class="slider" min="0" max="8" step="0.5" value="2">
+                <div class="slider-range">
+                    <span>0 hours</span>
+                    <span>8 hours</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Outdoor Play</span>
+                    <span class="form-value" id="outdoorPlayValue">1 hour</span>
+                </label>
+                <input type="range" id="outdoorPlay" class="slider" min="0" max="6" step="0.5" value="1">
+                <div class="slider-range">
+                    <span>0 hours</span>
+                    <span>6 hours</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Sleep Duration</span>
+                    <span class="form-value" id="sleepHoursValue">8 hours</span>
+                </label>
+                <input type="range" id="sleepHours" class="slider" min="4" max="12" step="0.5" value="8">
+                <div class="slider-range">
+                    <span>4 hours</span>
+                    <span>12 hours</span>
+                </div>
+            </div>
+
+            <button onclick="calculateScore()" class="btn-primary" style="width: 100%; margin-top: 1rem;">
+                Calculate My Child's Digital Parenting Score
+            </button>
+        </div>
+
+        <div class="privacy-notice">
+            <span style="font-size: 1.5rem;">🔒</span>
+            <div>
+                <strong style="color: #065F46;">Your Privacy Matters</strong>
+                <p style="color: #065F46; font-size: 0.875rem; margin-top: 0.25rem;">
+                    All calculations are performed locally in your browser. 
+                    No personal information is ever stored, collected, or transmitted. 
+                    No registration required.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" style="display: none; background: var(--gray-50); padding: 4rem 0;">
+        <div class="container">
+            <div class="card fade-in">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div class="score-circle">
+                        <span class="score-number" id="totalScore">0</span>
+                        <span class="score-total">/100</span>
+                    </div>
+                    <div id="categoryDisplay" style="margin-top: 1rem;"></div>
+                </div>
+
+                <div class="mini-cards">
+                    <div class="mini-card">
+                        <div class="mini-card-label">Sleep Score</div>
+                        <div class="mini-card-value" style="color: #3B82F6;" id="sleepScore">0/25</div>
+                    </div>
+                    <div class="mini-card">
+                        <div class="mini-card-label">Study Balance</div>
+                        <div class="mini-card-value" style="color: #10B981;" id="studyScore">0/20</div>
+                    </div>
+                    <div class="mini-card">
+                        <div class="mini-card-label">Gaming Control</div>
+                        <div class="mini-card-value" style="color: #F59E0B;" id="gamingScore">0/10</div>
+                    </div>
+                    <div class="mini-card">
+                        <div class="mini-card-label">Screen Management</div>
+                        <div class="mini-card-value" style="color: #8B5CF6;" id="screenScore">0/15</div>
+                    </div>
+                    <div class="mini-card">
+                        <div class="mini-card-label">Outdoor Activity</div>
+                        <div class="mini-card-value" style="color: #EC4899;" id="outdoorScore">0/20</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Time Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin: 2rem 0 1rem;">Personalized Recommendations</h3>
+                <div id="recommendationsList"></div>
+
+                <button onclick="downloadReport()" class="btn-primary" style="width: 100%; margin-top: 1.5rem;">
+                    Download Report (TXT)
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="container" style="padding: 4rem 0;">
+        <div class="card">
+            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How is the Digital Parenting Score calculated?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    The score is based on research-backed guidelines for children's digital wellness. It considers sleep duration, outdoor play, study balance, and screen time management. Each factor contributes to a score out of 100.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Is my child's data stored anywhere?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    No. All calculations happen entirely in your browser. We never collect, store, or transmit any personal information about you or your child.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What age group is this calculator for?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    This calculator is designed for children aged 3-17 years. Recommendations are adjusted based on age-appropriate guidelines.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Is this a medical assessment?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    No, this is an educational tool only. It provides general guidance based on common digital wellness principles and should not replace professional medical or psychological advice.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Promise Section -->
+    <section id="privacy" class="container" style="padding: 4rem 0;">
+        <div class="card text-center">
+            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Our Privacy Promise</h2>
+            <div class="privacy-promise-grid">
+                <div class="privacy-promise-item">
+                    <div class="privacy-promise-icon">🔒</div>
+                    <h3 style="font-weight: 700; margin-bottom: 0.5rem;">Browser-Based</h3>
+                    <p style="color: var(--gray-600);">Your information never leaves your browser</p>
+                </div>
+                <div class="privacy-promise-item">
+                    <div class="privacy-promise-icon">🗑️</div>
+                    <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Data Storage</h3>
+                    <p style="color: var(--gray-600);">No personal data is stored or collected</p>
+                </div>
+                <div class="privacy-promise-item">
+                    <div class="privacy-promise-icon">✅</div>
+                    <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Registration</h3>
+                    <p style="color: var(--gray-600);">Use freely without creating an account</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container" style="padding: 4rem 0;">
+        <div class="card">
+            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">About This Tool</h2>
+            <p style="color: var(--gray-600); margin-bottom: 1rem;">
+                We help Indian parents understand their child's digital habits and make informed decisions 
+                about screen time management. In today's digital age, parents face unprecedented challenges 
+                in managing their children's screen time and digital consumption.
+            </p>
+            <p style="color: var(--gray-600);">
+                Our tool provides quick, actionable insights based on research-backed guidelines for healthy 
+                digital habits. It evaluates multiple aspects of a child's daily routine including sleep, 
+                outdoor activity, study balance, and screen time across different platforms.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#calculator">Calculator</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#privacy">Privacy</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Digital Wellness Guide</a></li>
+                        <li><a href="#">Screen Time Research</a></li>
+                        <li><a href="#">Parenting Tips</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Important Disclaimer</h3>
+                    <p style="font-size: 0.875rem;">
+                        This tool provides educational guidance only and is not a medical or psychological assessment. 
+                        For professional advice regarding your child's health and development, please consult qualified 
+                        healthcare providers and child psychologists.
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Digital Parenting Score Calculator. All rights reserved.</p>
+                <p style="margin-top: 0.5rem;">
+                    <span>🔒 Your information never leaves your browser. No personal data is stored.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+    <script>
+        // Live value updates for sliders
+        const sliders = {
+            screenTime: { element: document.getElementById('screenTime'), display: document.getElementById('screenTimeValue'), unit: 'hours' },
+            gamingHours: { element: document.getElementById('gamingHours'), display: document.getElementById('gamingHoursValue'), unit: 'hours' },
+            youtubeHours: { element: document.getElementById('youtubeHours'), display: document.getElementById('youtubeHoursValue'), unit: 'hours' },
+            socialMediaHours: { element: document.getElementById('socialMediaHours'), display: document.getElementById('socialMediaHoursValue'), unit: 'hours' },
+            studyHours: { element: document.getElementById('studyHours'), display: document.getElementById('studyHoursValue'), unit: 'hours' },
+            outdoorPlay: { element: document.getElementById('outdoorPlay'), display: document.getElementById('outdoorPlayValue'), unit: 'hours' },
+            sleepHours: { element: document.getElementById('sleepHours'), display: document.getElementById('sleepHoursValue'), unit: 'hours' }
+        };
+
+        // Add event listeners to all sliders
+        Object.keys(sliders).forEach(key => {
+            sliders[key].element.addEventListener('input', function() {
+                sliders[key].display.textContent = this.value + ' ' + sliders[key].unit;
+            });
+        });
+
+        // Scoring logic
+        function calculateScore() {
+            // Get form values
+            const childAge = parseInt(document.getElementById('childAge').value);
+            const screenTime = parseFloat(document.getElementById('screenTime').value);
+            const gamingHours = parseFloat(document.getElementById('gamingHours').value);
+            const youtubeHours = parseFloat(document.getElementById('youtubeHours').value);
+            const socialMediaHours = parseFloat(document.getElementById('socialMediaHours').value);
+            const studyHours = parseFloat(document.getElementById('studyHours').value);
+            const outdoorPlay = parseFloat(document.getElementById('outdoorPlay').value);
+            const sleepHours = parseFloat(document.getElementById('sleepHours').value);
+
+            // Sleep Score (max 25 points)
+            let sleepScore = 0;
+            if (sleepHours >= 8 && sleepHours <= 10) {
+                sleepScore = 25;
+            } else if (sleepHours >= 7 && sleepHours < 8) {
+                sleepScore = 18;
+            } else if (sleepHours > 10) {
+                sleepScore = 15;
+            } else {
+                sleepScore = Math.max(0, sleepHours * 2);
+            }
+
+            // Outdoor Play Score (max 20 points)
+            let outdoorScore = Math.min(20, outdoorPlay * 10);
+
+            // Study Score (max 20 points)
+            let studyScore = 0;
+            if (studyHours >= 2 && studyHours <= 4) {
+                studyScore = 20;
+            } else if (studyHours >= 1 && studyHours < 2) {
+                studyScore = 15;
+            } else if (studyHours > 4) {
+                studyScore = 12;
+            } else {
+                studyScore = Math.min(10, studyHours * 5);
+            }
+
+            // Screen Time Score (max 15 points)
+            let screenScore = 0;
+            if (screenTime <= 2) {
+                screenScore = 15;
+            } else if (screenTime <= 4) {
+                screenScore = 10;
+            } else if (screenTime <= 6) {
+                screenScore = 5;
+            } else {
+                screenScore = Math.max(0, 15 - (screenTime - 2) * 2);
+            }
+
+            // Gaming Score (max 10 points)
+            let gamingScore = Math.max(0, 10 - gamingHours * 2);
+
+            // Social Media Score (max 10 points)
+            let socialScore = 0;
+            if (childAge < 13) {
+                socialScore = socialMediaHours === 0 ? 10 : 0;
+            } else {
+                socialScore = Math.max(0, 10 - socialMediaHours * 3);
+            }
+
+            const totalScore = Math.min(100, Math.round(
+                sleepScore + outdoorScore + studyScore + screenScore + gamingScore + socialScore
+            ));
+
+            // Determine category
+            let category, categoryClass;
+            if (totalScore >= 90) {
+                category = 'Excellent';
+                categoryClass = 'category-excellent';
+            } else if (totalScore >= 75) {
+                category = 'Good';
+                categoryClass = 'category-good';
+            } else if (totalScore >= 50) {
+                category = 'Needs Improvement';
+                categoryClass = 'category-needs-improvement';
+            } else {
+                category = 'High Risk';
+                categoryClass = 'category-high-risk';
+            }
+
+            // Generate recommendations
+            const recommendations = [];
+            
+            if (sleepHours < 8) {
+                recommendations.push(`Increase sleep duration by ${Math.round(8 - sleepHours)} hours to reach 8-10 hours recommended for children.`);
+            }
+            if (outdoorPlay < 1) {
+                recommendations.push('Add at least 60 minutes of outdoor physical activity daily.');
+            } else if (outdoorPlay < 2) {
+                recommendations.push('Increase outdoor play by 30 minutes for better physical health.');
+            }
+            if (screenTime > 3) {
+                recommendations.push(`Reduce screen time by ${Math.round(screenTime - 2)} hours daily. Consider setting screen-free zones and times.`);
+            }
+            if (gamingHours > 1) {
+                recommendations.push('Limit gaming to maximum 1 hour per day. Use parental controls if needed.');
+            }
+            if (socialMediaHours > 1 && childAge < 16) {
+                recommendations.push('Social media usage should be minimal for children. Consider supervised access only.');
+            }
+            if (studyHours < 1) {
+                recommendations.push('Establish a regular study routine of at least 1-2 hours daily.');
+            }
+
+            // Update UI
+            document.getElementById('totalScore').textContent = totalScore;
+            document.getElementById('sleepScore').textContent = `${Math.round(sleepScore)}/25`;
+            document.getElementById('studyScore').textContent = `${Math.round(studyScore)}/20`;
+            document.getElementById('gamingScore').textContent = `${Math.round(gamingScore)}/10`;
+            document.getElementById('screenScore').textContent = `${Math.round(screenScore)}/15`;
+            document.getElementById('outdoorScore').textContent = `${Math.round(outdoorScore)}/20`;
+
+            const categoryDisplay = document.getElementById('categoryDisplay');
+            categoryDisplay.innerHTML = `<span class="category-badge ${categoryClass}">${category}</span>`;
+
+            // Display recommendations
+            const recommendationsList = document.getElementById('recommendationsList');
+            recommendationsList.innerHTML = recommendations.map(rec => `
+                <div class="recommendation-item">
+                    <span class="recommendation-icon">💡</span>
+                    <p>${rec}</p>
+                </div>
+            `).join('');
+
+            // Show results section
+            document.getElementById('results').style.display = 'block';
+            
+            // Update chart
+            updateChart(sleepScore, studyScore, screenScore + gamingScore + socialScore, outdoorScore);
+
+            // Smooth scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
+            // Store data for report download
+            window.reportData = {
+                totalScore,
+                category,
+                sleepScore,
+                studyScore,
+                screenScore,
+                gamingScore,
+                socialScore,
+                outdoorScore,
+                recommendations,
+                date: new Date().toLocaleDateString('en-IN')
+            };
+        }
+
+        // Chart.js implementation
+        let chartInstance = null;
+
+        function updateChart(sleep, study, entertainment, outdoor) {
+            const ctx = document.getElementById('distributionChart').getContext('2d');
+            
+            // Destroy existing chart
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+            
+            chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sleep', 'Study', 'Entertainment', 'Outdoor Play'],
+                    datasets: [{
+                        data: [sleep, study, entertainment, outdoor],
+                        backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EC4899'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        }
+
+        // Download report
+        function downloadReport() {
+            if (!window.reportData) return;
+
+            const report = `
+Digital Parenting Score Report
+Date: ${window.reportData.date}
+
+Overall Score: ${window.reportData.totalScore}/100
+Category: ${window.reportData.category}
+
+Breakdown:
+• Sleep Habits: ${Math.round(window.reportData.sleepScore)}/25
+• Study Balance: ${Math.round(window.reportData.studyScore)}/20
+• Screen Time Management: ${Math.round(window.reportData.screenScore)}/15
+• Gaming Control: ${Math.round(window.reportData.gamingScore)}/10
+• Outdoor Activity: ${Math.round(window.reportData.outdoorScore)}/20
+
+Recommendations:
+${window.reportData.recommendations.map((r, i) => `${i + 1}. ${r}`).join('\n')}
+
+Note: This is an educational tool and not a substitute for professional medical or psychological advice.
+            `.trim();
+
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `digital-parenting-report-${Date.now()}.txt`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // FAQ toggle
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
+        }
+
+        // Scroll to top button visibility
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.getElementById('scrollTop');
+            if (window.pageYOffset > 500) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        // Initialize first FAQ item as open
+        document.querySelector('.faq-item').classList.add('active');
+    </script>
+</body>
+</html>
